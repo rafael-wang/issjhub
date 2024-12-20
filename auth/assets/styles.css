@@ -1,0 +1,184 @@
+/* Apply Lato font globally */
+body {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 100px;  /* Set the max width for the logo */
+    height: auto;
+    margin-top: 20px;  /* Push the logo down a bit */
+}
+
+.login-container {
+    width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background: #fff;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    margin: 0 0 20px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+p {
+    margin-bottom: 20px;
+    font-size: 1em;
+    color: #555;
+}
+
+label {
+    display: block;
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input[type="text"], input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    border-color: #0041a8;
+    box-shadow: 0 0 5px rgba(0, 65, 168, 0.5);
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    background-color: #002c77;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #0041a8;
+}
+
+.help-link {
+    display: block;
+    font-size: 12px;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.help-link:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 10px;
+    display: none;
+}
+
+.error-message.visible {
+    display: block;
+}
+
+.notepad-ui {
+    width: 250px;
+    padding: 15px;
+    background: #e0e0e0;
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    margin: 0 auto;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.notepad-ui input {
+    width: calc(100% - 20px);
+    padding: 8px;
+    border: 1px solid #999;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.notepad-ui .swoosh {
+    width: 80%;
+    height: 50px;
+    margin: 10px auto;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/a/aa/Wave-pattern.svg') center/contain no-repeat;
+}
+
+.notepad-ui .timestamp {
+    font-size: 12px;
+    color: #666;
+    margin-top: 10px;
+}
+
+.notepad-ui button {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    background-color: #555;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.notepad-ui button:hover {
+    background-color: #333;
+}
+
+.username-section, .password-section {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.username-section.active, .password-section.active {
+    display: block;
+    opacity: 1;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
