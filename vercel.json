@@ -1,20 +1,22 @@
 {
-    "rewrites": [
-      {
-        "source": "/assets/",
-        "destination": "/auth"  // Block directory access (redirect to 404)
-      }
-    ],
-    "headers": [
-      {
-        "source": "/assets/*",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=86400"  // Allow the cache to store assets
-          }
-        ]
-      }
-    ]
-  }
-  
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"  // Cache assets for better performance
+        }
+      ]
+    },
+    {
+      "source": "/assets/",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"  // Prevent folder from being indexed or accessed directly
+        }
+      ]
+    }
+  ]
+}
