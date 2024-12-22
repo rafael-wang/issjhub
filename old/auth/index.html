@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iSSJ Case Management Council</title>
+    <!-- Link to Google Fonts for Lato font -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/auth/assets/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo" class="logo">
+        </div>
+        <div class="login-container">
+            <div class="username-section active">
+                <h2>iSSJ Intranet</h2>
+                <p>Enter your username or iSSJ Key</p>
+                <label for="username">Username:</label>
+                <input type="text" id="username" placeholder="Enter your username">
+                <button id="username-submit">Continue</button>
+                <a href="#" class="help-link">Where do I enter my password?</a>
+                <div id="username-error" class="error-message">Invalid Username</div>
+            </div>
+            <div class="password-section">
+                <h2>Sign In:</h2>
+                <p>Please use this secure TextPad to enter your password.</p>
+                <div class="notepad-ui">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password">
+                    <div class="swoosh"></div>
+                    <div class="timestamp" id="timestamp"></div>
+                    <button id="password-submit">Enter</button>
+                </div>
+                <a href="#" class="help-link">What's this?</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="/auth/assets/script.js"></script>
+    <script>
+        if (window.location.pathname === '/portal/' && !localStorage.getItem('isAuthenticated')) {
+            window.location.href = '/login/';
+        }
+    </script>
+</body>
+</html>
