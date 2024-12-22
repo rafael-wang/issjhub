@@ -1,9 +1,19 @@
 {
-    "redirects": [
+    "rewrites": [
       {
         "source": "/assets/(.*)",
-        "destination": "/",
-        "permanent": true
+        "destination": "/auth"  // This will serve a 404 page if accessed directly
+      }
+    ],
+    "headers": [
+      {
+        "source": "/assets/(.*)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=86400"  // Set the cache header for assets
+          }
+        ]
       }
     ]
   }
