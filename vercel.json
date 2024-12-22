@@ -1,17 +1,17 @@
 {
     "rewrites": [
       {
-        "source": "/assets/(.*)",
-        "destination": "/auth"  // This will serve a 404 page if accessed directly
+        "source": "/assets/",
+        "destination": "/auth"  // Block directory access (redirect to 404)
       }
     ],
     "headers": [
       {
-        "source": "/assets/(.*)",
+        "source": "/assets/*",
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "public, max-age=86400"  // Set the cache header for assets
+            "value": "public, max-age=86400"  // Allow the cache to store assets
           }
         ]
       }
