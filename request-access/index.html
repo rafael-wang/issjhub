@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
+    <title>Interact BoD - Log In</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Include Lato font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/api/w3.css" />
+    <link rel="stylesheet" href="/api/sths-fonts.css" />    
+    <link rel="stylesheet" href="/api/sths-fa.css" />
+    <link rel="stylesheet" href="/api/sths-login.css" />
+    <link rel="icon" href="/api/favicon.ico">
+    <script src="/api/disable-inspect.js" defer></script>
+
+    <!-- Custom CSS for styling -->
+    <style>
+        /* Apply Lato font to the body and other elements */
+        body {
+            font-family: 'Lato', sans-serif; /* Set Lato font for body */
+            background-image: url('/api/login_background.jpg'); /* Set background image */
+            background-size: cover; /* Cover the entire screen */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Prevent image from repeating */
+            height: 100vh; /* Ensure body covers the full height of the viewport */
+            margin: 0; /* Remove default margin */
+        }
+
+        #shs-login-title {
+            font-family: 'Lato', sans-serif; /* Set Lato font for Portal Log In title */
+            font-weight: 900; /* Set to Lato bold weight */
+        }
+
+        .error-message {
+            background-color: #e74c3c; /* Red background */
+            color: white; /* White text */
+            padding: 16px;
+            border-radius: 5px;
+            font-weight: normal;
+            margin-top: 10px;
+        }
+        .error-message p {
+            margin: 0;
+            font-size: 1rem;
+        }
+        .error-message p:first-child {
+            font-size: 1.45rem;
+            font-weight: 900; /* Use Lato bold for this line */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- header -->
+    <div class="w3-top" id="shs-foot">
+        <div class="w3-row w3-black">
+            <div class="w3-buttons">            
+            </div>
+            <div class="shs-logo-foot">
+                <p class="shs-foot-text">iSSJ Case Management Commission</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- login container -->
+    <div id="shs-login-container">
+        <div class="w3-container" id="shs-login">
+            <div class="w3-card-4">
+                <!-- login header -->
+                <header class="w3-container">
+                    <h2 id="shs-login-title">Can't Access My Account?</h2>              
+                </header>
+
+                <!-- login content -->
+                <div class="w3-container">
+                    <div id="shs-login-message"></div> <!-- Error message will appear here -->
+
+                    <!-- Login form -->
+                    
+                        <div data-tf-widget="https://avsl2s8s36e.typeform.com/to/Xcm7m2qQ"></div>
+                        <script src="//embed.typeform.com/next/embed.js"></script>
+                    
+                    <p><a href="/auth/" rel="{handler: 'iframe', size: {x: 500, y: 350}}" rel="nofollow" id="intranetlogin" class="modal">Click to log in to the Interact iSSJ Case Management Portal</a>.</p>
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include your external JavaScript file for login validation -->
+    <script src="/api/configure-background.js"></script>
+
+</body>
+</html>
+
+<script async data-explicit-opt-in="true" data-cookie-opt-in="true" src="https://vercel.live/_next-live/feedback/feedback.js"></script>

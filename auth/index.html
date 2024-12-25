@@ -5,105 +5,88 @@
     <meta charset="utf-8" />
     <title>iSSJ CMC - Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-    <!-- Include Lato font from Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="/api/w3.css" />
-    <link rel="stylesheet" href="/api/sths-fonts.css" />    
+    <link rel="stylesheet" href="/api/sths-fonts.css" />
     <link rel="stylesheet" href="/api/sths-fa.css" />
     <link rel="stylesheet" href="/api/sths-login.css" />
     <link rel="icon" href="/api/favicon.ico">
-    <script src="/api//disable-inspect.js" defer></script>
-    <script src="/api/configure-Lock-admin.js"></script>
-    <script src="/api/loginRestrict.js"></script>
+    <script src="/api/disable-inspect.js" defer></script>
 
-    <!-- Custom CSS for styling -->
+    <!-- Correctly link the auth.js file with defer to ensure it loads after the DOM -->
+    <script src="/api/auth.js" defer></script>
+
     <style>
-        /* Apply Lato font to the body and other elements */
         body {
-            font-family: 'Lato', sans-serif; /* Set Lato font for body */
-            background-image: url('/api/login_background.jpg'); /* Set background image */
-            background-size: cover; /* Cover the entire screen */
-            background-position: center; /* Center the image */
-            background-repeat: no-repeat; /* Prevent image from repeating */
-            height: 100vh; /* Ensure body covers the full height of the viewport */
-            margin: 0; /* Remove default margin */
+            font-family: 'Lato', sans-serif;
+            background-image: url('/api/login_background.jpg');
+            background-size: cover;
+            height: 100vh;
+            margin: 0;
         }
 
         #shs-login-title {
-            font-family: 'Lato', sans-serif; /* Set Lato font for Portal Log In title */
-            font-weight: 900; /* Set to Lato bold weight */
+            font-family: 'Lato', sans-serif;
+            font-weight: 900;
         }
 
         .error-message {
-            background-color: #e74c3c; /* Red background */
-            color: white; /* White text */
+            background-color: #e74c3c;
+            color: white;
             padding: 16px;
             border-radius: 5px;
-            font-weight: normal;
             margin-top: 10px;
         }
-        .error-message p {
-            margin: 0;
-            font-size: 1rem;
-        }
+
         .error-message p:first-child {
             font-size: 1.45rem;
-            font-weight: 900; /* Use Lato bold for this line */
+            font-weight: 900;
         }
     </style>
 </head>
 <body>
 
-    <!-- header -->
     <div class="w3-top" id="shs-foot">
         <div class="w3-row w3-black">
-            <div class="w3-buttons">            
-            </div>
             <div class="shs-logo-foot">
-                <p class="shs-foot-text">iSSJ Case Management Committee </p>
+                <p class="shs-foot-text">iSSJ Case Management Commission</p>
             </div>
         </div>
     </div>
 
-    <!-- login container -->
     <div id="shs-login-container">
         <div class="w3-container" id="shs-login">
             <div class="w3-card-4">
-                <!-- login header -->
                 <header class="w3-container">
-                    <h2 id="shs-login-title">iSSJ Case Management Committee Login</h2>              
+                    <h2 id="shs-login-title">iSSJ Case Management Commission</h2>              
                 </header>
 
-                <!-- login content -->
                 <div class="w3-container">
-                    <p id="shs-login-instruction">Log in with your authorised iSSJ account &mdash;</p>
+                    <p id="shs-login-instruction">Log in with InteractKEY &mdash;</p>
                     <div id="shs-login-message"></div> <!-- Error message will appear here -->
 
-                    <!-- Login form -->
                     <form id="shs-login-form">
                         <section id="fld-username" class="shs-field w3-section">
                             <input class="w3-input" type="text" placeholder="Username" name="username" id="fld-username-fld" autofocus="autofocus" />
-                            <span class="bar"></span>
                         </section>
 
                         <section id="fld-password" class="shs-field w3-section">
                             <input class="w3-input" type="password" placeholder="Password" name="password" id="fld-password-fld" />
-                            <span class="bar"></span>
                         </section>
 
                         <section class="w3-section">
-                            <button type="button" onclick="validateLogin()" class="w3-button w3-block w3-blue">Log In</button>
+                            <!-- Removed inline onclick, will handle it through JS -->
+                            <button type="button" id="login-button" class="w3-button w3-block w3-blue">Log In</button>
                         </section>
                     </form>
 
+                    <section class="w3-section" id="shs-login-links">                    
+                        <p><a href="/login-instructions">Can't access your account?</a></p>
+                    </section>
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="/api/configure-background.js"></script>
 
 </body>
 </html>

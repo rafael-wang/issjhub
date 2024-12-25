@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iSSJ CMC - Portal</title>
+    <script src="/api/redirect.js" defer></script> <!-- Link to redirect.js -->
+    <script src="/api/logout.js" defer></script> <!-- Link to logout.js -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            padding: 20px;
+            text-align: center;
+        }
+        .logout-btn {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Hi <span id="username"></span></h1>
+        <p>Today is <span id="currentDate"></span></p>
+        <p>Your Role: <span id="userRole"></span></p>
+
+        <button class="logout-btn" id="logout-btn">Log Out</button>
+    </div>
+
+    <script>
+        // Check if the user is logged in, if not, redirect to login page
+        if(localStorage.getItem('loggedIn') !== 'true') {
+            window.location.href = '/auth/'; // Redirect to login page
+        }
+
+        // Update user details and current date dynamically
+        document.addEventListener("DOMContentLoaded", function() {
+            const username = localStorage.getItem("username");
+            const role = localStorage.getItem("role");
+            const currentDate = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = currentDate.toLocaleDateString('en-US', options);
+
+            // Display user details
+            document.getElementById("username").textContent = username || 'Guest';
+            document.getElementById("currentDate").textContent = formattedDate;
+            document.getElementById("userRole").textContent = role || 'No Role Assigned';
+
+            // Handle log out
+            document.getElementById("logout-btn").addEventListener("click", function() {
+                localStorage.removeItem("loggedIn");
+                localStorage.removeItem("username");
+                localStorage.removeItem("role");
+                window.location.href = '/auth/'; // Redirect to the login page after logging out
+            });
+        });
+    </script>
+
+</body>
+</html>
