@@ -2,69 +2,215 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iSSJ CMC - Portal</title>
-    <script src="/api/redirect.js" defer></script> <!-- Link to redirect.js -->
-    <script src="/api/logout.js" defer></script> <!-- Link to logout.js -->
+    <title>Intranet Portal</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
         }
         .container {
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
+        }
+        h1 {
             text-align: center;
+            color: #333;
         }
         .logout-btn {
+            display: inline-block;
             padding: 10px 20px;
             background-color: #007BFF;
             color: white;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
+            float: right;
         }
         .logout-btn:hover {
             background-color: #0056b3;
         }
+        .notice-form {
+            margin: 20px 0;
+            padding: 15px;
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .notice-form input, .notice-form textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .notice-form button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .notice-form button:hover {
+            background-color: #218838;
+        }
+        .notices {
+            list-style-type: none;
+            padding: 0;
+        }
+        .notices li {
+            background: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .notices li h3 {
+            margin: 0;
+        }
+        .notices li p {
+            margin: 5px 0;
+        }
+        .notices li small {
+            color: #666;
+            display: block;
+        }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <h1>Hi <span id="username"></span></h1>
+        <h1>Welcome, <span id="username"></span></h1>
         <p>Today is <span id="currentDate"></span></p>
         <p>Your Role: <span id="userRole"></span></p>
-
         <button class="logout-btn" id="logout-btn">Log Out</button>
+
+        <!-- Notice Form (Only for Super-Users) -->
+        <div id="notice-form-container" style="display: none;">
+            <h2>Add a Notice</h2>
+            <form id="notice-form" class="notice-form">
+                <input type="text" id="notice-title" placeholder="Notice Title" required />
+                <textarea id="notice-content" placeholder="Notice Content" rows="4" required></textarea>
+                <input type="date" id="notice-expiry" required />
+                <button type="submit">Post Notice</button>
+            </form>
+        </div>
+
+        <!-- Notices List -->
+        <h2>Notices</h2>
+        <ul id="notices-list" class="notices"></ul>
     </div>
 
     <script>
-        // Check if the user is logged in, if not, redirect to login page
-        if(localStorage.getItem('loggedIn') !== 'true') {
-            window.location.href = '/auth/'; // Redirect to login page
+        const backendURL = "https://script.google.com/macros/s/AKfycbwX1sx_22DyJMTKxbtosmpB8nuV_sNx8_ls8s_xD7W6A068NreGpxSPRtPZ4DoRdVigTw/exec";
+
+        // Check if the user is logged in
+        if (localStorage.getItem("loggedIn") !== "true") {
+            window.location.href = "/auth/"; // Redirect to login page
         }
 
-        // Update user details and current date dynamically
-        document.addEventListener("DOMContentLoaded", function() {
+        // Display user information and set up page
+        document.addEventListener("DOMContentLoaded", async () => {
             const username = localStorage.getItem("username");
             const role = localStorage.getItem("role");
-            const currentDate = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const formattedDate = currentDate.toLocaleDateString('en-US', options);
+            const currentDate = new Date().toLocaleDateString('en-US', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+            });
 
             // Display user details
             document.getElementById("username").textContent = username || 'Guest';
-            document.getElementById("currentDate").textContent = formattedDate;
+            document.getElementById("currentDate").textContent = currentDate;
             document.getElementById("userRole").textContent = role || 'No Role Assigned';
 
-            // Handle log out
-            document.getElementById("logout-btn").addEventListener("click", function() {
+            // Show notice form if the user is a Super-User
+            if (role === "Super-User") {
+                document.getElementById("notice-form-container").style.display = "block";
+            }
+
+            // Handle logout
+            document.getElementById("logout-btn").addEventListener("click", () => {
                 localStorage.removeItem("loggedIn");
                 localStorage.removeItem("username");
                 localStorage.removeItem("role");
-                window.location.href = '/auth/'; // Redirect to the login page after logging out
+                window.location.href = "/auth/";
             });
+
+            // Render notices
+            await renderNotices();
+        });
+
+        // Fetch notices from backend
+        async function fetchNotices() {
+            const response = await fetch(backendURL);
+            const data = await response.json();
+            return data.slice(1).map(row => ({
+                title: row[0],
+                content: row[1],
+                posted_at: row[2],
+                expiry_date: row[3],
+                posted_by: row[4]
+            }));
+        }
+
+        // Post a new notice
+        async function postNotice(notice) {
+            await fetch(backendURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    ...notice,
+                    posted_by: localStorage.getItem("username")
+                })
+            });
+        }
+
+        // Render notices dynamically
+        async function renderNotices() {
+            const noticesList = document.getElementById("notices-list");
+            const notices = await fetchNotices();
+
+            noticesList.innerHTML = ""; // Clear notices
+            const now = new Date();
+
+            notices.forEach(notice => {
+                const expiryDate = new Date(notice.expiry_date);
+                if (expiryDate > now) {
+                    const noticeItem = document.createElement("li");
+                    noticeItem.innerHTML = `
+                        <h3>${notice.title}</h3>
+                        <p>${notice.content}</p>
+                        <small>Posted on: ${new Date(notice.posted_at).toLocaleDateString()}</small>
+                        <small>Expires on: ${expiryDate.toLocaleDateString()}</small>
+                        <small>Posted by: ${notice.posted_by}</small>
+                    `;
+                    noticesList.appendChild(noticeItem);
+                }
+            });
+        }
+
+        // Handle notice form submission
+        document.getElementById("notice-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const title = document.getElementById("notice-title").value;
+            const content = document.getElementById("notice-content").value;
+            const expiryDate = document.getElementById("notice-expiry").value;
+
+            const newNotice = {
+                title,
+                content,
+                posted_at: new Date().toISOString(),
+                expiry_date: expiryDate
+            };
+
+            await postNotice(newNotice);
+            e.target.reset(); // Clear form
+            renderNotices(); // Refresh notices
         });
     </script>
-
 </body>
 </html>
+
